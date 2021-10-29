@@ -10,6 +10,7 @@ import Combine
 
 class WebSocketService: ObservableObject {
     
+    var coin: CoinModel
     private let urlSession = URLSession(configuration: .default)
     private var webSocketTask: URLSessionWebSocketTask?
     
@@ -26,7 +27,8 @@ class WebSocketService: ObservableObject {
         }
     }
     
-    init() {
+    init(coin: CoinModel) {
+        self.coin = coin
         cancellable = AnyCancellable($price
                                         .debounce(for: 0.5, scheduler: DispatchQueue.main)
                                         .removeDuplicates()
@@ -49,7 +51,8 @@ class WebSocketService: ObservableObject {
     }
     
     func sendMessage() {
-        let dataString = "{\"type\":\"subscribe\",\"symbol\":\"BINANCE:BTCUSDT\"}"
+        let symbol = "BINANCE:\(coin.symbol.uppercased())USDT"
+        let dataString = "{\"type\":\"subscribe\",\"symbol\":\"\(symbol)\"}"
         let message = URLSessionWebSocketTask.Message.string(dataString)
         
         webSocketTask?.send(message) { error in
@@ -69,7 +72,7 @@ class WebSocketService: ObservableObject {
                     let decoder = JSONDecoder()
                     let result = try decoder.decode(APIResponse.self, from: Data(data.utf8))
                     DispatchQueue.main.async {
-                        self.price = String(Double(result.data[0].p).asCurrencyWith2Decimals())
+                        self.price = String(Double(result.data[0].p).asCurrencyWith6Decimals())
                     }
                 } catch {
                     print("[WebsocketService] error decoding message - \(error.localizedDescription)")

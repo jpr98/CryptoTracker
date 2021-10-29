@@ -24,7 +24,7 @@ struct ChartView: View {
         minY = data.min() ?? 0
         
         let priceChange = (data.last ?? 0) - (data.first ?? 0)
-        lineColor = priceChange > 0 ? Color.green : Color.red
+        lineColor = priceChange > 0 ? Color.theme.green : Color.theme.red
         
         endingDate = Date(coinGeckoString: coin.lastUpdated ?? "")
         startingDate = endingDate.addingTimeInterval(-7*24*60*60)
@@ -57,6 +57,7 @@ struct ChartView: View {
 struct ChartView_Previews: PreviewProvider {
     static var previews: some View {
         ChartView(coin: dev.coin)
+            .preferredColorScheme(.dark)
             .frame(width: 200)
     }
 }

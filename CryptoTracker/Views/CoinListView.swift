@@ -19,7 +19,11 @@ struct CoinListView: View {
                 SearchBarView(searchText: $vm.searchText)
                 List {
                     ForEach(vm.coins) { coin in
-                        CoinRowView(coin: coin)
+                        NavigationLink(
+                            destination: CoinDetailView(coin: coin, service: WebSocketService(coin: coin))
+                        ) {
+                            CoinRowView(coin: coin)
+                        }
                     }
                 }
                 .listStyle(PlainListStyle())

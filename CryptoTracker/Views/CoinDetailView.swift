@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CoinDetailView: View {
     var coin: CoinModel
-    @ObservedObject var service = WebSocketService()
+    @ObservedObject var service: WebSocketService
     
     var body: some View {
         VStack {
@@ -21,18 +21,23 @@ struct CoinDetailView: View {
             HStack {
                 Text(coin.symbol.uppercased())
                     .font(.title2)
+                    .foregroundColor(Color.theme.accent)
                 Image(systemName: "arrow.right")
+                    .foregroundColor(Color.theme.accent)
                 Text("USD")
+                    .foregroundColor(Color.theme.accent)
                     .font(.title2)
             }
             
             Text(service.priceResult.isEmpty ? "$0.00" : service.priceResult)
                 .font(.title)
+                .foregroundColor(Color.theme.accent)
                 .padding(.bottom, 20)
             
             ChartView(coin: coin)
                 .padding()
             Text("Last 7 days")
+                .foregroundColor(Color.theme.accent)
                 .padding(.top, 8)
             Spacer(minLength: 0)
         }
@@ -44,6 +49,7 @@ struct CoinDetailView: View {
 
 struct CoinDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        CoinDetailView(coin: dev.coin)
+        CoinDetailView(coin: dev.coin, service: WebSocketService(coin: dev.coin))
+            .preferredColorScheme(.dark)
     }
 }
