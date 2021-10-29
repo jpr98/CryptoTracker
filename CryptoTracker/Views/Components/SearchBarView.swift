@@ -14,7 +14,7 @@ struct SearchBarView: View {
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
-                .foregroundColor(.black)
+                .foregroundColor(Color.theme.accent)
             
             TextField("Search by name or symbol", text: $searchText)
                 .disableAutocorrection(true)
@@ -34,7 +34,7 @@ struct SearchBarView: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 15)
-                .fill(.white)
+                .fill(Color.theme.background)
                 .shadow(color: .black.opacity(0.15), radius: 10, x: 0, y: 0)
         )
         .padding()
