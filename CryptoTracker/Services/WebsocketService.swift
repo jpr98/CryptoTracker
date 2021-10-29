@@ -69,7 +69,7 @@ class WebSocketService: ObservableObject {
                     let decoder = JSONDecoder()
                     let result = try decoder.decode(APIResponse.self, from: Data(data.utf8))
                     DispatchQueue.main.async {
-                        self.price = String(result.data[0].p)
+                        self.price = String(Double(result.data[0].p).asCurrencyWith2Decimals())
                     }
                 } catch {
                     print("[WebsocketService] error decoding message - \(error.localizedDescription)")

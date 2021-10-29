@@ -12,27 +12,44 @@ struct CoinListView: View {
     @ObservedObject var vm = CoinListViewModel()
     
     var body: some View {
-        VStack {
-            headerView
-            SearchBarView(searchText: $vm.searchText)
-            List {
-                ForEach(vm.coins) { coin in
-                    CoinRowView(coin: coin)
+        ZStack {
+            
+            VStack {
+                headerView
+                SearchBarView(searchText: $vm.searchText)
+                List {
+                    ForEach(vm.coins) { coin in
+                        CoinRowView(coin: coin)
+                    }
                 }
+                .listStyle(PlainListStyle())
+                Spacer(minLength: 0)
             }
-            .listStyle(PlainListStyle())
         }
     }
     
     var headerView: some View {
         HStack {
-            Color.blue
+            Text("Coins")
+                .font(.title)
+                .fontWeight(.bold)
+            
         }
+        
+    }
+    
+    var dateFormat: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE"
+        return formatter
     }
 }
 
 struct CoinListView_Previews: PreviewProvider {
     static var previews: some View {
-        CoinListView()
+        NavigationView {
+            CoinListView()
+                .navigationBarHidden(true)
+        }
     }
 }
