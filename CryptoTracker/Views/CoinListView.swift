@@ -13,14 +13,13 @@ struct CoinListView: View {
     
     var body: some View {
         VStack {
-            headerView
             SearchBarView(searchText: $vm.searchText)
             List {
                 ForEach(vm.coins) { coin in
                     CoinRowView(coin: coin)
                 }
             }
-            .listStyle(PlainListStyle())
+            .listStyle(InsetGroupedListStyle())
         }
     }
     

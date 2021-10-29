@@ -26,7 +26,7 @@ struct CoinImageView: View {
                 ProgressView()
             } else {
                 Image(systemName: "questionmark")
-                    .foregroundColor(.gray)
+                    .foregroundColor(Color.theme.secondaryText)
             }
         }
     }
